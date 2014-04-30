@@ -317,7 +317,7 @@ void LightingScene::update(unsigned long ms) {
 	_last_time_ms = ms;
 
 	clock->update(elapsed);
-	std::cout << "Tempo: " << elapsed << ", " << ms << std::endl;
+	//	std::cout << "Tempo: " << elapsed << ", " << ms << std::endl;
     
 }
 

@@ -48,10 +48,12 @@ void Clock::draw() {
 void Clock::update(unsigned long time)
 {
 	if(_active){
-		float a = ((float)(time)/1000.0)*360.0/(60);
+		float a = ((float)(time)/1000.0)*360.0/60.0;
+
 		HourHand->setAngle(HourHand->getAngle() - (a/(3600.0/5.0))); 
 		MinHand->setAngle(MinHand->getAngle() - (a/60.0) );
 		SecHand->setAngle(SecHand->getAngle() - a);
+		
 		HourHand->draw();
 		MinHand->draw();
 		SecHand->draw();

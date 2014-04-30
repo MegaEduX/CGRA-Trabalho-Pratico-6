@@ -18,42 +18,42 @@ void ClockHand::setAngle(float angle) {
 }
 
 void ClockHand::draw() {
-	Cube chand;
+	Cube *chand = new Cube();
 	glPushMatrix();
-		glScaled(0.2,1,0.2);
-	glPopMatrix();
 	
 	switch (_tt) {
 	case kTimeTypeSeconds:
-		glPushMatrix();
 			glRotated(_angle,1,0,0);
 			glScaled(0.025,0.42,0.05);
 			glTranslated(2.4,0,0);
 			chAppearance->apply();
-			chand.draw();
-		glPopMatrix();
+			chand->draw();
 		break;
 
 	case kTimeTypeMinutes:
-		glPushMatrix();
 			glRotated(_angle,1,0,0);
 			glScaled(0.025,0.6,0.05);
 			glTranslated(2.2,0,0);
 			chAppearance->apply();
-			chand.draw();
-		glPopMatrix();
+			chand->draw();
 		break;
 
 	case kTimeTypeHours:
-		glPushMatrix();
+		
 			glRotated(_angle,1,0,0);
 			glScaled(0.025,0.69,0.01);
 			glTranslated(2.8,0,0);
 			chAppearance->apply();
-			chand.draw();
-		glPopMatrix();
+			chand->draw();
+		
+		break;
+
+	default:
+
 		break;
 	}
+
+	glPopMatrix();
 }
 
 float ClockHand::getAngle(){
