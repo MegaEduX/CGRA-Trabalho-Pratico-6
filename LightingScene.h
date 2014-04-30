@@ -31,9 +31,9 @@ public:
     CGFappearance* tableAppearance;
     CGFappearance* windowAppearance;
     CGFappearance* floorAppearance;
-	CGFappearance* clockAppearance;
-
 	~LightingScene();
+
+	unsigned long _last_time_ms;
     
     void update(unsigned long ms);
 };

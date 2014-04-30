@@ -12,26 +12,15 @@ typedef struct coordinate {
 } crd;
 
 class Cylinder : public CGFobject {
-    
-private:
-    
-    int _slices;
-    int _stacks;
-    
-    bool _smooth;
-    
-    bool _isClock;
-    
-    std::vector<coordinate> _vertices;
-    
-public:
-    
-    Cylinder(int slices, int stacks, bool smooth);
-    
-    void draw();
-    
-    void setIsClock(bool cl);
-    
+
+	bool smooth;
+	int slices;
+	int stacks;
+
+	public:
+		Cylinder(int slices, int stacks, bool smooth);
+		void draw();
+
 };
 
 

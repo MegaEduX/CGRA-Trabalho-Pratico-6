@@ -6,6 +6,7 @@
 #include "Chair.h"
 #include "Cylinder.h"
 #include "ClockHand.h"
+#include <iostream>
 
 #include <math.h>
 
@@ -122,8 +123,8 @@ void LightingScene::init()
     floorAppearance = new CGFappearance(ambA, difA, specA, shininessA);
     floorAppearance -> setTexture("floor.png");
 
-	clockAppearance = new CGFappearance(ambA, difA, specA, shininessA);
-	clockAppearance->setTexture("clock.png");
+	setUpdatePeriod(100);
+
 }
 
 void LightingScene::display() 
@@ -155,24 +156,40 @@ void LightingScene::display()
     
 	glPushMatrix();
     
-    glTranslated(2.0f, 0.0f, 2.0f);
-    
-    //glScalef(5, 1, 5);
     
     Cylinder *cyl = new Cylinder(20, 8, true);
+	
+	glScaled(1,5,1);
+
+	glTranslated(3.0f, 0.5f, 2.0f);
+
+	glRotated(90,1,0,0);
     
     cyl->draw();
+	
     
 	glPopMatrix();
     
     glPushMatrix();
+
     
-    glTranslated(6.0f, 0.0f, 2.0f);
+
     
     //glScalef(5, 1, 5);
     
     Cylinder *cyl2 = new Cylinder(20, 8, false);
+
+	glScaled(1,5,1);
+
+	glTranslated(7.0f, 0.5f, 2.0f);
+	
+	glRotated(90,1,0,0);
+
     cyl2->draw();
+
+
+
+
     
 	glPopMatrix();
     
@@ -272,40 +289,15 @@ void LightingScene::display()
     
 		boardB->draw(1, 1.3f, -0.12f);
 	glPopMatrix();
-
-	//Clock
-    
+		
+	//  Clock Hand
 	glPushMatrix();
-        glTranslated(7.25,8,0);
-        glScaled(2.5, 2.5, 0.2);
-        clock->draw();
+		glTranslated(7.3,7.5,0.175);
+		glRotated(-90,0,1,0);
+		clock->draw();
 	glPopMatrix();
-    
-		//  Clock Hand
-    
-    glPushMatrix();
-    
-    ClockHand* chHour = clock->HourHand;
-    
-    float appr1[3] = {0.0f, 0.0f, 0.0f};
-    float appr2[3] = {0.0f, 0.0f, 0.0f};
-    float appr3[3] = {0.0f, 0.0f, 0.0f};
-    float appr4 = 1.0f;
-    
-    CGFappearance *app = new CGFappearance(appr1, appr2, appr3, appr4);
-    
-    app->apply();
-    
-    glTranslated(-0.05, -.5, 0);
-    glTranslated(7.25, 8, 0);
-    
-    glScaled(0.1, 0.3, 0.25);
-    
-	glRotated(chHour->getAngle(), 0, 0, 1);
-    
-    chHour->draw();
-    
-    glPopMatrix();
+
+
 
 	// ---- END Primitive drawing section
 	
@@ -317,6 +309,15 @@ void LightingScene::display()
 }
 
 void LightingScene::update(unsigned long ms) {
+	if (!_last_time_ms)
+		_last_time_ms = ms;
+
+	long elapsed = ms - _last_time_ms;
+
+	_last_time_ms = ms;
+
+	clock->update(elapsed);
+	std::cout << "Tempo: " << elapsed << ", " << ms << std::endl;
     
 }
 

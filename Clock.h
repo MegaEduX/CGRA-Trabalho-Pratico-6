@@ -4,6 +4,8 @@
 class Clock
 {
 	 Cylinder* clockCyl;
+	 bool _active;
+	 CGFappearance* clockAppearance;
 
 
 public:
@@ -11,6 +13,16 @@ public:
 	ClockHand* MinHand;
 	ClockHand* SecHand;
 	Clock(void);
+	void update(unsigned long time);
+	
+	void setActive(bool isActive) {
+		_active = isActive;
+	}
+
+	bool getActive() {
+		return _active;
+	}
+	
 	void draw();
 	~Clock(void);
 };
