@@ -22,6 +22,8 @@ public:
 	bool getActive() {
 		return _active;
 	}
+
+	void resetClock();
 	
 	void draw();
 	~Clock(void);

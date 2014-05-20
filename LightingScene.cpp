@@ -6,6 +6,7 @@
 #include "Chair.h"
 #include "Cylinder.h"
 #include "ClockHand.h"
+#include "Robot.h"
 #include <iostream>
 
 #include <math.h>
@@ -53,6 +54,11 @@ float yellow[4]={1,1,0,1};
 
 void LightingScene::init() 
 {
+	sceneVar=0;
+	_light0=0;
+	_light1=0;
+	_light2=0;
+	_light3=0;
 	// Enables lighting computations
 	glEnable(GL_LIGHTING);
 
@@ -102,9 +108,10 @@ void LightingScene::init()
 
 	//Declares scene elements
 	table = new Table();
-    chair = new Chair();
+    //chair = new Chair();
 	wall = new Plane();
 	clock = new Clock();
+	robot = new Robot(10);
     
 	boardA = new Plane(BOARD_A_DIVISIONS);
 	boardB = new Plane(BOARD_B_DIVISIONS);
@@ -141,11 +148,30 @@ void LightingScene::display()
 
 	// Apply transformations corresponding to the camera position relative to the origin
 	CGFscene::activeCamera->applyView();
-
 	light0->draw();
 	light1->draw();
     light2->draw();
     light3->draw();
+	//Light0 
+	if(_light0 == 1)
+		light0->enable();
+	else
+		light0->disable();
+	//Light1
+	if(_light1 == 1)
+		light1->enable();
+	else
+		light1->disable();
+	//Light2
+	if(_light2 == 1)
+		light2->enable();
+	else
+		light2->disable();
+	//Light3
+	if(_light3 == 1)
+		light3->enable();
+	else
+		light3->disable();
 	
 	// Draw axis
 	axis.draw();
@@ -193,19 +219,19 @@ void LightingScene::display()
     
 	glPopMatrix();
     
-    // First Chair
+    /* First Chair
     
     glPushMatrix();
     glTranslated(5, 0, 4);
     chair->draw();
-    glPopMatrix();
+    glPopMatrix();*/
     
-    // Second Chair
+    /* Second Chair
     
     glPushMatrix();
     glTranslated(14, 0, 6);
     chair->draw();
-    glPopMatrix();
+    glPopMatrix();*/
     
     //First Table
     
@@ -214,20 +240,20 @@ void LightingScene::display()
     table->draw();
 	glPopMatrix();
     
-	//Second Table
+	/*Second Table
 	glPushMatrix();
     glTranslated(12,0,8);
     table->draw();
 	glPopMatrix();
     
-    materialFW->apply();
+    materialFW->apply();*/
 
 	//Floor
 	glPushMatrix();
 		glTranslated(7.5,0,7.5);
 		glScaled(15,0.2,15);
 		floorAppearance->setTextureWrap(GL_REPEAT, GL_REPEAT);
-    floorAppearance->apply();
+		floorAppearance->apply();
 		wall->draw(12.0f, 10.0f,0);
 	glPopMatrix();
 
@@ -297,6 +323,11 @@ void LightingScene::display()
 		clock->draw();
 	glPopMatrix();
 
+	// Robot
+	glPushMatrix();
+		materialB->apply();
+		robot->draw();
+	glPopMatrix();
 
 
 	// ---- END Primitive drawing section
@@ -321,6 +352,8 @@ void LightingScene::update(unsigned long ms) {
     
 }
 
+void LightingScene::toggleSomething(){
+}
 LightingScene::~LightingScene() 
 {
 	delete(light0);

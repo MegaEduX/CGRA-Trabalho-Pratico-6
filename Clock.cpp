@@ -45,6 +45,12 @@ void Clock::draw() {
 	SecHand->draw();   
 }
 
+void Clock::resetClock(){
+	HourHand->setAngle(0);
+	MinHand->setAngle(0);
+	SecHand->setAngle(0);
+}
+
 void Clock::update(unsigned long time)
 {
 	if(_active){
