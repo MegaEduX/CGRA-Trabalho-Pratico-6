@@ -15,13 +15,28 @@ void TPinterface::processKeyboard(unsigned char key, int x, int y)
 
 	switch(key)
 	{
-		case 'a':
+		case 'i':
 		{
 			// This is an example of accessing the associated scene
 			// To test, create the function toggleSomething in your scene to activate/deactivate something
-			((LightingScene *) scene)->toggleSomething();
+			((LightingScene *) scene)->robot->move(0);
 			break;
 		}
+		case 'k':
+			{
+			((LightingScene *) scene)->robot->move(1);
+			break;
+			}
+		case 'j':
+			{
+			((LightingScene *) scene)->robot->rotate(0);
+			break;
+			}
+		case 'l':
+			{
+			((LightingScene *) scene)->robot->rotate(1);
+			break;
+			}
 	}
 }
 

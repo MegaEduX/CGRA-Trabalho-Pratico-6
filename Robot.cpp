@@ -2,6 +2,7 @@
 #define PI 3.141592653589793238463
 #define DegToRad PI/180
 #include <cmath>
+#include <iostream>
 
 
 Robot::Robot(double xpos, double ypos , double zpos,double yOrient, int stacks) {
@@ -19,17 +20,16 @@ Robot::Robot(double xpos, double ypos , double zpos,double yOrient, int stacks) 
 	_stacks = stacks;
 	_textured = true;
 
-	float xInit =-0.5 , zInit=0.5 , jump=0;
-	int orient=1;
 
 	//CIRCLE -> POINTS AND NORMALS
-	for (int i=0; i<13; i++){
+	/*for (int i=0; i<13; i++){
+		cout << "Iteration: " << i << std::endl;
 		_xPositionsCircle.push_back(sin((315+jump)*DegToRad)/4.0);
 		_zPositionsCircle.push_back(cos((315+jump)*DegToRad)/4.0);
 		_zPositionsTop.push_back(cos((315+jump-100)*DegToRad)/4.0);
 		_xPositionsTop.push_back(sin((315+jump-100)*DegToRad)/4.0);
 		_yPositionsTop.push_back(-0.5);
-		if( (i==3) || (i==6) || (i=9)){
+		if( (i==3) || (i==6) || (i==9)){
 			_xPositionsCircle.push_back(sin((315+jump)*DegToRad) / 4.0);
 			_zPositionsCircle.push_back(cos((315+jump)*DegToRad)/4.0);
 			_zPositionsTop.push_back(cos((315+jump-100)*DegToRad)/4.0);
@@ -121,7 +121,7 @@ Robot::Robot(double xpos, double ypos , double zpos,double yOrient, int stacks) 
 		}
 		_DrawX.push_back(xPos);
 		_DrawZ.push_back(zPos);
-	}
+	}*/
 }
 
 /*void Robot::setAngle(float angle){
@@ -134,6 +134,22 @@ void Robot::setPosition(float xpos, float ypos, float zpos){
 	_zpos=zpos;
 }*/
 
+void Robot::move(int dir){
+	if (dir == 0) {
+		_zpos += cos(_angle * DegToRad) * 0.1;
+		_xpos += sin(_angle * DegToRad) * 0.1;
+	} else if (dir == 1) {
+		_zpos -= cos(_angle * DegToRad) * 0.1;
+		_xpos -= sin(_angle * DegToRad) * 0.1;
+	}
+}
+
+void Robot::rotate(int dir) {
+	if (dir == 0) 
+		_angle += 2.5;
+	if (dir == 1)
+		_angle -= 2.5;
+}
 
 void Robot::draw() {
 		double dx = 1/3 , alpha = -5 * PI / 4 , dalpha = -PI / 6 ;
@@ -146,7 +162,7 @@ void Robot::draw() {
 
 	//TOP
 		glPushMatrix();
-		glTranslated(0, 0.9+_ypos, 0);
+		glTranslated(_xpos, 1+_ypos, _zpos);
 			glBegin(GL_POLYGON);
 			for (float i=15.0; i<375.0; i+=jump) {
 					glNormal3d(0,1,0);
@@ -166,20 +182,7 @@ void Robot::draw() {
 				glVertex3d(-0.5, 0, 0.5);
 			glEnd();
 
-	//DRAW ROBOT
-		for (int i=0; i<15; i++){
-		glBegin(GL_TRIANGLE_STRIP);
-			for (int j=0; j<=_stacks; j++){
-				glTexCoord2d(_DrawX[i][j] + 0.5, 0.5 - _DrawZ[i][j]);
-				glNormal3d(_DrawX[i][j], 0, _DrawZ[i][j]);
-				glVertex3d(_DrawX[i][j], (double)j/_stacks, _DrawZ[i][j]);
-
-				glTexCoord2d(_DrawX[i+1][j] + 0.5, 0.5 - _DrawZ[i+1][j]);
-				glNormal3d(_DrawX[i+1][j], 0, _DrawZ[i+1][j]);
-				glVertex3d(_DrawX[i+1][j], (double)j/_stacks, _DrawZ[i+1][j]);
-			}
-		glEnd();
-		}
+	
 		glPopMatrix();
 		glEnable(GL_CULL_FACE);
 		glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
@@ -190,6 +193,7 @@ void Robot::draw() {
 
 
 
+	//ROBOT
 	glTranslated(_xpos, _ypos, _zpos);
 	glRotated(_angle,0,1,0);
 	for (int j = 0; j < 4; j++) {

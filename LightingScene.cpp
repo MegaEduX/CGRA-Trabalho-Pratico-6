@@ -120,9 +120,12 @@ void LightingScene::init()
 	materialA = new CGFappearance(ambA,difA,specA,shininessA);
 	materialB = new CGFappearance(ambB,difB,specB,shininessB);
     materialFW = new CGFappearance(ambFW, difFW, specFW, shininessFW);
+	materialR = new CGFappearance(ambB, difB, specB, shininessB);
+
     
     materialA -> setTexture("slides.png");
     materialB -> setTexture("board.png");
+	materialR -> setTexture("robot1.jpg");
     
     windowAppearance = new CGFappearance(ambA, difA, specA, shininessA);
     windowAppearance -> setTexture("window.png");
@@ -324,10 +327,10 @@ void LightingScene::display()
 	glPopMatrix();
 
 	// Robot
-	/*glPushMatrix();
-		materialB->apply();
+	glPushMatrix();
+		materialR->apply();
 		robot->draw();
-	glPopMatrix();*/
+	glPopMatrix();
 
 
 	// ---- END Primitive drawing section

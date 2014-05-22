@@ -38,6 +38,7 @@ public:
 	CGFappearance* materialA;
 	CGFappearance* materialB;
     CGFappearance* materialFW;
+	CGFappearance* materialR;
     CGFappearance* tableAppearance;
     CGFappearance* windowAppearance;
     CGFappearance* floorAppearance;
