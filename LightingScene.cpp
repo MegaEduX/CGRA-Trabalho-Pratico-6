@@ -111,7 +111,7 @@ void LightingScene::init()
     //chair = new Chair();
 	wall = new Plane();
 	clock = new Clock();
-	robot = new Robot(10);
+	robot = new Robot(5.0,0.1,5.0,0,8);
     
 	boardA = new Plane(BOARD_A_DIVISIONS);
 	boardB = new Plane(BOARD_B_DIVISIONS);
@@ -324,10 +324,10 @@ void LightingScene::display()
 	glPopMatrix();
 
 	// Robot
-	glPushMatrix();
+	/*glPushMatrix();
 		materialB->apply();
 		robot->draw();
-	glPopMatrix();
+	glPopMatrix();*/
 
 
 	// ---- END Primitive drawing section
