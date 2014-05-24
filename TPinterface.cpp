@@ -46,6 +46,7 @@ void TPinterface::initGUI()
 	GLUI_Panel *mainPanel= addPanel("Controls", 0);
 	GLUI_Panel *lightPanel = addPanelToPanel(mainPanel, "Lights", 1);
 	GLUI_Panel *clockPanel = addPanelToPanel(mainPanel, "Clock", 1);
+	GLUI_Panel *robotPanel = addPanelToPanel(mainPanel, "Robot" , 1);
 	addCheckboxToPanel(lightPanel, "Light 0:", &(((LightingScene*) scene)->_light0), 1);
 	addCheckboxToPanel(lightPanel, "Light 1:", &(((LightingScene*) scene)->_light1), 2);
 	addCheckboxToPanel(lightPanel, "Light 2:", &(((LightingScene*) scene)->_light2), 3);
@@ -53,6 +54,9 @@ void TPinterface::initGUI()
 	addColumn();
 	addButtonToPanel(clockPanel , "Pause/Resume", 5);
 	addButtonToPanel(clockPanel , "Restart", 6); 
+	addColumn();
+	addListboxToPanel(robotPanel, "Textura 1", &(((LightingScene*) scene)->_listbox), 1);
+
 	
 
 

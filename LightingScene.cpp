@@ -59,6 +59,7 @@ void LightingScene::init()
 	_light1=0;
 	_light2=0;
 	_light3=0;
+	_listbox=0;
 	// Enables lighting computations
 	glEnable(GL_LIGHTING);
 

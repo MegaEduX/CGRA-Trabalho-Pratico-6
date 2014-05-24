@@ -28,6 +28,7 @@ public:
 	int _light3;
 	int clock_status1;
 	int clock_status2;
+	int _listbox;
 
 	Table* table;
     Chair* chair;
