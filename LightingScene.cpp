@@ -110,6 +110,7 @@ void LightingScene::init()
 	table = new Table();
     //chair = new Chair();
 	wall = new Plane();
+	impostor = new Impostor(3, 2.5, -0.75);
 	clock = new Clock();
 	robot = new Robot(5.0,0.1,5.0,0,8);
     
@@ -129,6 +130,10 @@ void LightingScene::init()
     
     windowAppearance = new CGFappearance(ambA, difA, specA, shininessA);
     windowAppearance -> setTexture("window.png");
+	windowAppearance -> setTextureWrap(GL_CLAMP, GL_CLAMP);
+
+	backgroundAppearance = new CGFappearance(ambA, difA, specA, shininessA);
+	backgroundAppearance -> setTexture("background.jpg");
     
     floorAppearance = new CGFappearance(ambA, difA, specA, shininessA);
     floorAppearance -> setTexture("floor.png");
@@ -264,13 +269,9 @@ void LightingScene::display()
 	glPushMatrix();
 		glTranslated(0,4,7.5);
 		glRotated(-90.0,0,0,1);
-    
 		glScaled(8,0.2,15);
-    
-    materialFW->apply();
-    
-		wall->draw(1.0f, 1.0f,0);
-    
+		materialFW->apply();
+		impostor->draw();
 	glPopMatrix();
     
     glPushMatrix();
@@ -279,13 +280,23 @@ void LightingScene::display()
     glRotated(-90.0,0,0,1);
     glScaled(4, 0.1, 7.5);
     
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
     
     windowAppearance->apply();
     wall->draw(1.0f, 1.0f,0);
     
     glPopMatrix();
+	
+
+	//BackGround
+	glPushMatrix();
+		glTranslated(-50, 4, 7.5);
+		glRotated(-90.0, 0, 0, 1);
+		glScaled(75, 0.2, 100);
+		backgroundAppearance->apply();
+		wall->drawWindow();
+	glPopMatrix();
 
 	//PlaneWall
 	glPushMatrix();
@@ -351,7 +362,7 @@ void LightingScene::update(unsigned long ms) {
 	_last_time_ms = ms;
 
 	clock->update(elapsed);
-	//	std::cout << "Tempo: " << elapsed << ", " << ms << std::endl;
+	//std::cout << "Tempo: " << elapsed << ", " << ms << std::endl;
     
 }
 

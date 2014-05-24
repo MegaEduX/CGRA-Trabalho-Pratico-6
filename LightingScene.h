@@ -8,6 +8,7 @@
 #include "Chair.h"
 #include "Clock.h"
 #include "Robot.h"
+#include "Impostor.h"
 
 class LightingScene : public CGFscene
 {
@@ -35,6 +36,7 @@ public:
 	Plane* boardB;
 	Clock* clock;
 	Robot* robot;
+	Impostor* impostor;
 	CGFappearance* materialA;
 	CGFappearance* materialB;
     CGFappearance* materialFW;
@@ -42,6 +44,7 @@ public:
     CGFappearance* tableAppearance;
     CGFappearance* windowAppearance;
     CGFappearance* floorAppearance;
+	CGFappearance* backgroundAppearance;
 	~LightingScene();
 
 	unsigned long _last_time_ms;
