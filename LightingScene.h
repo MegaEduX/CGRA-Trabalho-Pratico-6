@@ -28,7 +28,8 @@ public:
 	int _light3;
 	int clock_status1;
 	int clock_status2;
-	int _listbox;
+	int _textselect;
+	int _radiobutton;
 
 	Table* table;
     Chair* chair;
@@ -41,11 +42,14 @@ public:
 	CGFappearance* materialA;
 	CGFappearance* materialB;
     CGFappearance* materialFW;
-	CGFappearance* materialR;
-    CGFappearance* tableAppearance;
+	CGFappearance* tableAppearance;
     CGFappearance* windowAppearance;
     CGFappearance* floorAppearance;
 	CGFappearance* backgroundAppearance;
+	CGFappearance* Robot1Appearance;
+	CGFappearance* Robot2Appearance;
+	CGFappearance* Robot3Appearance;
+
 	~LightingScene();
 
 	unsigned long _last_time_ms;

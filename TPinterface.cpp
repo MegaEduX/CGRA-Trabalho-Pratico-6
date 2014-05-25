@@ -47,6 +47,8 @@ void TPinterface::initGUI()
 	GLUI_Panel *lightPanel = addPanelToPanel(mainPanel, "Lights", 1);
 	GLUI_Panel *clockPanel = addPanelToPanel(mainPanel, "Clock", 1);
 	GLUI_Panel *robotPanel = addPanelToPanel(mainPanel, "Robot" , 1);
+
+
 	addCheckboxToPanel(lightPanel, "Light 0:", &(((LightingScene*) scene)->_light0), 1);
 	addCheckboxToPanel(lightPanel, "Light 1:", &(((LightingScene*) scene)->_light1), 2);
 	addCheckboxToPanel(lightPanel, "Light 2:", &(((LightingScene*) scene)->_light2), 3);
@@ -55,7 +57,15 @@ void TPinterface::initGUI()
 	addButtonToPanel(clockPanel , "Pause/Resume", 5);
 	addButtonToPanel(clockPanel , "Restart", 6); 
 	addColumn();
-	addListboxToPanel(robotPanel, "Textura 1", &(((LightingScene*) scene)->_listbox), 1);
+	GLUI_Listbox* lb = addListboxToPanel(robotPanel, "", &(((LightingScene*) scene)->_textselect), 7);
+	lb->add_item(1, "Texture 1");
+	lb->add_item(2, "Texture 2");
+	lb->add_item(3, "Texture 3");
+	GLUI_RadioGroup* gbutton = addRadioGroupToPanel(robotPanel, &(((LightingScene*) scene)->_radiobutton), 8);
+	addRadioButtonToGroup(gbutton, "Textured");
+	addRadioButtonToGroup(gbutton, "WireFrame");
+
+	
 
 	
 
@@ -94,14 +104,18 @@ void TPinterface::processGUI(GLUI_Control *ctrl)
 		case 5:
 		{
 			((LightingScene*) scene)->clock->setActive(!((LightingScene*) scene)->clock->getActive());
-			printf("Clock Paused/Resumed");
+			printf("Clock Paused/Resumed\n");
 			break;
 		};
 		case 6:
 		{
 			((LightingScene*) scene)->clock->resetClock();
 			break;
-			printf("Clock Reseted");
+			printf("Clock Reseted\n");
+		};
+		case 7:
+		{
+			printf("Texture Changed");
 		};
 
 	};

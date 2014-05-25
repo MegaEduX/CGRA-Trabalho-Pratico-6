@@ -6,133 +6,15 @@
 
 
 Robot::Robot(double xpos, double ypos , double zpos,double yOrient, int stacks) {
-
-	// ambC[3] = {0.2, 0.2, 0.2};
-	//float difC[3] = {0.6, 0.6, 0.6};
-	//float specC[3] = /* {0.2, 0.2, 0.2} */ {0.0, 0.2, 0.8};
-	//float shininessC = /*   10.f    */ 120.0f;
-	
-	//rAppearance = new CGFappearance(ambC, difC, specC, shininessC);
 	_xpos = xpos;
 	_ypos = ypos;
 	_zpos = zpos;
 	_angle= yOrient;
 	_stacks = stacks;
 	_textured = true;
-
-
-	//CIRCLE -> POINTS AND NORMALS
-	/*for (int i=0; i<13; i++){
-		cout << "Iteration: " << i << std::endl;
-		_xPositionsCircle.push_back(sin((315+jump)*DegToRad)/4.0);
-		_zPositionsCircle.push_back(cos((315+jump)*DegToRad)/4.0);
-		_zPositionsTop.push_back(cos((315+jump-100)*DegToRad)/4.0);
-		_xPositionsTop.push_back(sin((315+jump-100)*DegToRad)/4.0);
-		_yPositionsTop.push_back(-0.5);
-		if( (i==3) || (i==6) || (i==9)){
-			_xPositionsCircle.push_back(sin((315+jump)*DegToRad) / 4.0);
-			_zPositionsCircle.push_back(cos((315+jump)*DegToRad)/4.0);
-			_zPositionsTop.push_back(cos((315+jump-100)*DegToRad)/4.0);
-			_xPositionsTop.push_back(sin((315+jump-100)*DegToRad)/4.0);
-			_yPositionsTop.push_back(-0.5);
-		}
-		jump+=30;
-	}
-
-	//SQUARE -> POINTS AND NORMALS
-	jump=0;
-	for (int i=0; i<13;i++){
-		switch(orient){
-			case 1:
-				xInit+=jump;
-				_xPositions.push_back(xInit);
-				_zPositions.push_back(zInit);
-				_xPositionsBase.push_back(0);
-				_zPositionsBase.push_back(1);
-				_yPositionsBase.push_back(0);
-				break;
-			case 2:
-				zInit-=jump;
-				_xPositions.push_back(xInit);
-				_zPositions.push_back(zInit);
-				_xPositionsBase.push_back(1);
-				_zPositionsBase.push_back(0);
-				_yPositionsBase.push_back(0);
-				break;
-			case 3:
-				xInit-=jump;
-				_xPositions.push_back(xInit);
-				_zPositions.push_back(zInit);
-				_xPositionsBase.push_back(0);
-				_zPositionsBase.push_back(-1);
-				_yPositionsBase.push_back(0);
-			case 4:
-				zInit+=jump;
-				_xPositions.push_back(xInit);
-				_zPositions.push_back(zInit);
-				_xPositionsBase.push_back(-1);
-				_zPositionsBase.push_back(0);
-				_yPositionsBase.push_back(0);
-				break;
-			default:
-				break;
-		}
-		if(i == 3){
-			_xPositions.push_back(0.5);
-			_zPositions.push_back(0.5);
-			_xPositionsBase.push_back(1);
-			_zPositionsBase.push_back(0);
-			_yPositionsBase.push_back(0);
-			orient++;
-		}
-		if(i == 6){
-			_xPositions.push_back(0.5);
-			_zPositions.push_back(-0.5);
-			_xPositionsBase.push_back(0);
-			_zPositionsBase.push_back(-1);
-			_yPositionsBase.push_back(0);
-			orient++;
-		}
-		if(i == 9){
-			_xPositions.push_back(-0.5);
-			_zPositions.push_back(-0.5);
-			_xPositionsBase.push_back(-1);
-			_zPositionsBase.push_back(0);
-			_yPositionsBase.push_back(0);
-			orient++;
-		}
-
-
-		}
-
-	//CALCULATE OF DELTA (dist between square and circle) to get robot points positions
-	for (int i=0; i<16;i++){
-		_deltaX.push_back(_xPositionsCircle[i]-_xPositions[i]);
-		_deltaZ.push_back(_zPositionsCircle[i]-_zPositions[i]);
-	}
-	
-	//Robot Points
-	for(int i=0;i<16;i++){
-		vector <double> xPos;
-		vector <double> zPos;
-		for (int j=0; j<=_stacks;j++){
-			xPos.push_back(_xPositions[i]+ _deltaX[i]*j*(1.0/_stacks));
-			zPos.push_back(_zPositions[i]+ _deltaZ[i]*j*(1.0/_stacks));
-		}
-		_DrawX.push_back(xPos);
-		_DrawZ.push_back(zPos);
-	}*/
 }
 
-/*void Robot::setAngle(float angle){
-	_angle = angle;
-}
 
-void Robot::setPosition(float xpos, float ypos, float zpos){
-	_xpos=xpos;
-	_ypos=ypos;
-	_zpos=zpos;
-}*/
 
 void Robot::move(int dir){
 	if (dir == 0) {
@@ -156,10 +38,10 @@ void Robot::draw() {
 		float jump=30;
 		glDisable(GL_CULL_FACE);
 
-		if(!_textured)
+		if(_textured)
 			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-
+	//TEXEL CORRESSPONDENTE S = x+ 0,5 | T=z+0.5
 	//TOP
 		glPushMatrix();
 		glTranslated(_xpos, 1+_ypos, _zpos);
@@ -167,6 +49,7 @@ void Robot::draw() {
 			for (float i=15.0; i<375.0; i+=jump) {
 					glNormal3d(0,1,0);
 					glVertex3d(sin(DegToRad*i)/4, 0, cos(DegToRad*i)/4);
+					glTexCoord2f((sin(DegToRad*i)/4)+0.5,(sin(DegToRad*i)/4)+0.5);
 				}
 			glEnd();
 		glPopMatrix();
@@ -177,9 +60,13 @@ void Robot::draw() {
 			glRotated(_angle, 0, 1, 0);
 			glBegin(GL_POLYGON);
 				glVertex3d(-0.5, 0, -0.5);
+				glTexCoord2f(0,0);
 				glVertex3d(0.5, 0, -0.5);
+				glTexCoord2f(1,0);
 				glVertex3d(0.5, 0, 0.5);
+				glTexCoord2f(1,1);
 				glVertex3d(-0.5, 0, 0.5);
+				glTexCoord2f(0,1);
 			glEnd();
 
 	
@@ -215,8 +102,10 @@ void Robot::draw() {
 			glBegin(GL_TRIANGLE_STRIP);
 			glNormal3d(px1, 0, pz1);
 			glVertex3f(px1, py, pz1);
+			glTexCoord2f(px1+0.5,pz1+0.5);
 			glNormal3d(px2, 0, pz2);
 			glVertex3f(px2, py, pz2);
+			glTexCoord2f(px2+0.5,pz2+0.5);
 			for (int k = 1; k < _stacks; k++) {
 				if (px1 < 0)
 					px1 = px1 + dex1;
@@ -232,15 +121,19 @@ void Robot::draw() {
 
 				glNormal3d(px1, 0, pz1);
 				glVertex3f(px1, py, pz1);
+				glTexCoord2f(px1+0.5,pz1+0.5);
 				glNormal3d(px2, 0, pz2);
 				glVertex3f(px2, py, pz2);
+				glTexCoord2f(px2+0.5,pz2+0.5);
 
 			}
 
 			glNormal3d(x1, 0, z1);
 			glVertex3f(x1, 1, z1);
+			glTexCoord2f(x1+0.5,z1+0.5);
 			glNormal3d(x2, 0, z2);
 			glVertex3f(x2, 1, z2);
+			glTexCoord2f(x2+0.5,z2+0.5);
 			glEnd();
 		}
 	}
@@ -248,6 +141,9 @@ void Robot::draw() {
 
 }
 
+void Robot::setTypeofTexture(bool opt){
+	_textured=opt;
+}
 
 
 

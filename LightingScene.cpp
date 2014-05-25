@@ -59,7 +59,8 @@ void LightingScene::init()
 	_light1=0;
 	_light2=0;
 	_light3=0;
-	_listbox=0;
+	_textselect=1;
+	_radiobutton=0;
 	// Enables lighting computations
 	glEnable(GL_LIGHTING);
 
@@ -122,12 +123,11 @@ void LightingScene::init()
 	materialA = new CGFappearance(ambA,difA,specA,shininessA);
 	materialB = new CGFappearance(ambB,difB,specB,shininessB);
     materialFW = new CGFappearance(ambFW, difFW, specFW, shininessFW);
-	materialR = new CGFappearance(ambB, difB, specB, shininessB);
+	Robot1Appearance = new CGFappearance(ambB, difB, specB, shininessB);
 
     
     materialA -> setTexture("slides.png");
     materialB -> setTexture("board.png");
-	materialR -> setTexture("robot1.jpg");
     
     windowAppearance = new CGFappearance(ambA, difA, specA, shininessA);
     windowAppearance -> setTexture("window.png");
@@ -138,6 +138,19 @@ void LightingScene::init()
     
     floorAppearance = new CGFappearance(ambA, difA, specA, shininessA);
     floorAppearance -> setTexture("floor.png");
+
+	Robot1Appearance = new CGFappearance(ambB, difB, specB, shininessB);
+	Robot1Appearance->setTexture("robot1.jpg");
+	Robot1Appearance->setTextureWrap(GL_CLAMP,GL_CLAMP);
+
+	Robot2Appearance = new CGFappearance(ambB, difB, specB, shininessB);
+	Robot2Appearance->setTexture("robot2.jpg");
+	Robot2Appearance->setTextureWrap(GL_CLAMP,GL_CLAMP);
+
+	Robot3Appearance = new CGFappearance(ambB, difB, specB, shininessB);
+	Robot3Appearance->setTexture("robot3.jpg");
+	Robot3Appearance->setTextureWrap(GL_CLAMP,GL_CLAMP);
+	
 
 	setUpdatePeriod(100);
 
@@ -181,6 +194,22 @@ void LightingScene::display()
 		light3->enable();
 	else
 		light3->disable();
+	
+		glPushMatrix();
+			if (_textselect == 1)
+				Robot1Appearance->apply();
+			if (_textselect == 2)
+				Robot2Appearance->apply();
+			if (_textselect == 3)
+				Robot3Appearance->apply();
+			robot->draw();
+		glPopMatrix();
+
+	if(_radiobutton)
+		robot->setTypeofTexture(true);
+	else
+		robot->setTypeofTexture(false);
+
 	
 	// Draw axis
 	axis.draw();
@@ -316,11 +345,7 @@ void LightingScene::display()
 		clock->draw();
 	glPopMatrix();
 
-	// Robot
-	glPushMatrix();
-		materialR->apply();
-		robot->draw();
-	glPopMatrix();
+
 
 
 	// ---- END Primitive drawing section
@@ -342,6 +367,7 @@ void LightingScene::update(unsigned long ms) {
 
 	clock->update(elapsed);
 	//std::cout << "Tempo: " << elapsed << ", " << ms << std::endl;
+	std::cout << "Var :" << _radiobutton << std::endl;
     
 }
 
