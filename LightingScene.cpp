@@ -367,7 +367,6 @@ void LightingScene::update(unsigned long ms) {
 
 	clock->update(elapsed);
 	//std::cout << "Tempo: " << elapsed << ", " << ms << std::endl;
-	std::cout << "Var :" << _radiobutton << std::endl;
     
 }
 
@@ -377,11 +376,26 @@ LightingScene::~LightingScene()
 {
 	delete(light0);
 	delete(light1);
+	delete(light2);
+	delete(light3);
 
 	delete(table);
+	delete(chair);
 	delete(wall);
 	delete(boardA);
 	delete(boardB);
+	delete(clock);
+	delete(robot);
+	delete(impostor);
 	delete(materialA);
 	delete(materialB);
+	delete(materialFW);
+	delete(tableAppearance);
+	delete(windowAppearance);
+	delete(floorAppearance);
+	delete(backgroundAppearance);
+	delete(Robot1Appearance);
+	delete(Robot2Appearance);
+	delete(Robot3Appearance);
+
 }

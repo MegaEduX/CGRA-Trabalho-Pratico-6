@@ -47,30 +47,35 @@ void Robot::draw() {
 		glTranslated(_xpos, 1+_ypos, _zpos);
 			glBegin(GL_POLYGON);
 			for (float i=15.0; i<375.0; i+=jump) {
+					float x=sin(DegToRad*i)/4;
+					float y=0, z =cos(DegToRad*i)/4;
 					glNormal3d(0,1,0);
-					glVertex3d(sin(DegToRad*i)/4, 0, cos(DegToRad*i)/4);
-					glTexCoord2f((sin(DegToRad*i)/4)+0.5,(sin(DegToRad*i)/4)+0.5);
-				}
+					glTexCoord2f(x+0.5,z+0.5);
+					glVertex3d(x, y, z);
+			}
 			glEnd();
 		glPopMatrix();
+
 	//BOTTOM
 		glPushMatrix();
 			glNormal3d(0, 1, 0);
 			glTranslated(_xpos, _ypos, _zpos);
 			glRotated(_angle, 0, 1, 0);
 			glBegin(GL_POLYGON);
-				glVertex3d(-0.5, 0, -0.5);
 				glTexCoord2f(0,0);
-				glVertex3d(0.5, 0, -0.5);
+				glVertex3d(-0.5, 0, -0.5);
 				glTexCoord2f(1,0);
-				glVertex3d(0.5, 0, 0.5);
+				glVertex3d(0.5, 0, -0.5);
 				glTexCoord2f(1,1);
-				glVertex3d(-0.5, 0, 0.5);
+				glVertex3d(0.5, 0, 0.5);
 				glTexCoord2f(0,1);
+				glVertex3d(-0.5, 0, 0.5);
 			glEnd();
 
 	
 		glPopMatrix();
+
+
 		glEnable(GL_CULL_FACE);
 		glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
 
@@ -101,11 +106,11 @@ void Robot::draw() {
 					(z2 - pz2) / _stacks);
 			glBegin(GL_TRIANGLE_STRIP);
 			glNormal3d(px1, 0, pz1);
+			glTexCoord2f(px1+0.5,1-(pz1+0.5));
 			glVertex3f(px1, py, pz1);
-			glTexCoord2f(px1+0.5,pz1+0.5);
 			glNormal3d(px2, 0, pz2);
+			glTexCoord2f(px2+0.5,1-(pz2+0.5));
 			glVertex3f(px2, py, pz2);
-			glTexCoord2f(px2+0.5,pz2+0.5);
 			for (int k = 1; k < _stacks; k++) {
 				if (px1 < 0)
 					px1 = px1 + dex1;
@@ -120,20 +125,20 @@ void Robot::draw() {
 				pz2 = pz2 - dez2;
 
 				glNormal3d(px1, 0, pz1);
+				glTexCoord2f(px1+0.5,1-(pz1+0.5));
 				glVertex3f(px1, py, pz1);
-				glTexCoord2f(px1+0.5,pz1+0.5);
 				glNormal3d(px2, 0, pz2);
+				glTexCoord2f(px2+0.5,1-(pz2+0.5));
 				glVertex3f(px2, py, pz2);
-				glTexCoord2f(px2+0.5,pz2+0.5);
 
 			}
 
 			glNormal3d(x1, 0, z1);
+			glTexCoord2f(x1+0.5,1-(z1+0.5));
 			glVertex3f(x1, 1, z1);
-			glTexCoord2f(x1+0.5,z1+0.5);
 			glNormal3d(x2, 0, z2);
+			glTexCoord2f(x2+0.5,1-(z2+0.5));
 			glVertex3f(x2, 1, z2);
-			glTexCoord2f(x2+0.5,z2+0.5);
 			glEnd();
 		}
 	}
